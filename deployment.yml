@@ -1,0 +1,36 @@
+--- 
+apiVersion: v1
+kind: Service
+metadata: 
+  name: go-service
+spec: 
+  ports: 
+    - name: http
+      port: 80
+      targetPort: 8080
+      protocol: TCP
+  selector: 
+    app: go-hello-world
+  type: LoadBalancer
+--- 
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  labels: 
+    app: go-hello-world
+  name: go-hello-world
+spec: 
+  replicas: 2
+  selector:
+    matchLabels:
+      app: go-hello-world
+  template: 
+    metadata: 
+      labels: 
+        app: go-hello-world
+    spec: 
+      containers: 
+        - image: punkupoz/go-hello-world:latest
+          name: go-hello-world
+          ports: 
+            - containerPort: 8080

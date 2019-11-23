@@ -1,0 +1,3 @@
+.terraform
+gcp_key.json
+state
